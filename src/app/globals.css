@@ -1,15 +1,35 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
+  --background: #021111;
   --foreground: #171717;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-primary-100: #e0f7f9;
+  --color-primary-200: #b3ecf1;
+  --color-primary-300: #80dfe7;
+  --color-primary-400: #4dd3dd;
+  --color-primary-500: #26c7d4;
+  --color-primary-600: #1fa5b1;
+  --color-primary-700: #17818a;
+  --color-primary-800: #0f5d62;
+  --color-primary-900: #07393b;
+
+  --color-secondary-100: #fff2f1;
+  --color-secondary-100: #ffe4e1;
+  --color-secondary-200: #ffcdc7;
+  --color-secondary-300: #ffaaa0;
+  --color-secondary-400: #ff7a6b;
+  --color-secondary-500: #f84e3b;
+  --color-secondary-600: #e5311d;
+  --color-secondary-700: #c12614;
+  --color-secondary-800: #a02214;
+  --color-secondary-900: #842318;
+  --color-secondary-950: #480e07;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +42,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+body:has(dialog[open]) {
+  overflow: hidden;
 }
