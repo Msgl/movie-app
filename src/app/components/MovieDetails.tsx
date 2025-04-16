@@ -91,7 +91,7 @@ export default function MovieDetails({
     <>
       <dialog
         ref={dialogRef}
-        className='absolute w-screen max-w-[40rem] rounded z-100 top-0 backdrop:bg-black/80 backdrop:backdrop-blur-sm m-auto px-6 py-8'
+        className='absolute w-screen max-w-[40rem] rounded z-100 top-0 backdrop:bg-black/80 backdrop:backdrop-blur-sm m-auto px-6 py-8 open:flex'
       >
         <div className='absolute right-0 top-1 flex justify-end p-2'>
           <button className='cursor-pointer' onClick={handleClose}>
