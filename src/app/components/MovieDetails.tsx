@@ -38,10 +38,17 @@ export default function MovieDetails({
   resetAction,
 }: MovieDetailsProps) {
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [isClient, setIsClient] = useState(false); // for hydration fix
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const savedScrollPosition = useRef(0);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!movieID) return;
+
     const fetchMovieDetails = async () => {
       const response = await fetch(`/api/movie-details?id=${movieID}`);
       const data = await response.json();
@@ -62,31 +69,39 @@ export default function MovieDetails({
         writer: data?.Writer ?? 'N/A',
         actors: data?.Actors ?? 'N/A',
       });
-
-      // Save scroll position before opening dialog
-      savedScrollPosition.current = window.scrollY;
-
-      // Lock the scroll when the modal is open
-      document.body.style.overflow = 'hidden';
-
-      // Open the dialog
-      if (dialogRef.current) {
-        dialogRef.current.showModal();
-      }
     };
+
     fetchMovieDetails();
   }, [movieID]);
+
+  useEffect(() => {
+    if (movie && dialogRef.current) {
+      savedScrollPosition.current = window.scrollY;
+      document.body.style.overflow = 'hidden';
+
+      const dialog = dialogRef.current;
+
+      try {
+        if (!dialog.open) {
+          dialog.showModal();
+        }
+      } catch (err) {
+        console.warn('Fallback dialog open failed:', err);
+        dialog.setAttribute('open', 'true'); // fallback if showModal fails
+      }
+    }
+  }, [movie]);
 
   const handleClose = () => {
     if (dialogRef.current) {
       dialogRef.current.close();
       resetAction();
-      // Restore scroll position after closing the dialog
       window.scrollTo(0, savedScrollPosition.current);
       document.body.style.overflow = '';
     }
   };
-  if (!movie) return null;
+
+  if (!movie || !isClient) return null;
   return (
     <>
       <dialog
