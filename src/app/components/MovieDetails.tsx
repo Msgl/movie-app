@@ -124,7 +124,7 @@ export default function MovieDetails({
         <div className='flex justify-between'>
           <div>
             <h2 className='uppercase text-xl'>
-              {clean(movie.title)} ({clean(movie.year)})
+              {clean(movie.title)} {movie.year ? `(${clean(movie.year)})` : ''}
               
             </h2>
             <div>
